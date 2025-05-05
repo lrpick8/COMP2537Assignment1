@@ -1,10 +1,17 @@
-<h1>Log In</h1>
-<% if (error) { %><p style="color:red"><%= error %></p><% } %>
-<form action="/login" method="POST">
-  Email: <input type="email" name="email"><br>
-  Password: <input type="password" name="password"><br>
-  <button type="submit">Log In</button>
-</form>
-<a href="/login">Try again</a>
-<a href="/signup">Don't have an account? Sign up</a>
-<a href="/">Back to Home</a>
+<!DOCTYPE html>
+<html>
+<head><title>Login</title></head>
+<body>
+    <h1>Login</h1>
+    <% if (error) { %><p style="color:red"><%= error %></p><% } %>
+    <form action="/login" method="POST">
+        <label>Email:</label><br>
+        <input type="email" name="email"><br>
+        <label>Password:</label><br>
+        <input type="password" name="password"><br><br>
+        <button type="submit">Log In</button>
+    </form>
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>
