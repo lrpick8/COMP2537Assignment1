@@ -118,7 +118,7 @@ app.get('/members', (req, res) => {
         return res.redirect('/');
     }
 
-    const images = ['pic1.jpg', 'pic2.jpg', 'pic3.jpg'];
+    const images = ['Brucey of Thrones.jpg', 'Brucey Potter.jpg', 'Trailer Park Brucey.jpg'];
     const randomImage = images[Math.floor(Math.random() * images.length)];
     res.render('members', { user: req.session.user, image: randomImage });
 });
