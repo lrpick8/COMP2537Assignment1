@@ -1,32 +1,41 @@
-requestAnimationFrame('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
-const path = require('path');
+const MongoStore = require('connect-mongo');
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI) 
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(() => {
+    console.log('MongoDB connected');
+}).catch(err => {
+    console.error('MongoDB connection error:', err);
+});
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
-app.set('view engine', 'ejs');
 
+// Session Setup
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI, ttl: 60 * 60 })
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI, 
+        ttl: 60 * 60 
+    }),
+    cookie: { maxAge: 60 * 60 * 1000 } 
 }));
 
-app.use((req, res) => {
-    res.status(404).render('404');
+// Sample route
+app.get('/', (req, res) => {
+    res.send('Home page');
 });
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server is running on port ${process.env.PORT || 3000}`);
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
 });
-
