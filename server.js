@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 const path = require('path');
 
@@ -17,10 +17,8 @@ const User = mongoose.model('User', new mongoose.Schema({
 }));
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => {
     console.log('MongoDB connected');
 }).catch(err => {
     console.error('MongoDB connection error:', err);
